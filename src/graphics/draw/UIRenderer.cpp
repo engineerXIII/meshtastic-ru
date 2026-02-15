@@ -10,6 +10,7 @@
 #include "gps/GeoCoord.h"
 #include "graphics/Screen.h"
 #include "graphics/ScreenFonts.h"
+#include "graphics/ScreenLocalization.h"
 #include "graphics/SharedUIDisplay.h"
 #include "graphics/images.h"
 #include "main.h"
@@ -587,9 +588,9 @@ void UIRenderer::drawDeviceFocused(OLEDDisplay *display, OLEDDisplayUiState *sta
 
     // Display Region and Channel Utilization
 #if defined(M5STACK_UNITC6L)
-    drawNodes(display, x, getTextPositions(display)[line] + 2, nodeStatus, -1, false, "online");
+    drawNodes(display, x, getTextPositions(display)[line] + 2, nodeStatus, -1, false, MSG_ONLINE);
 #else
-    drawNodes(display, x + 1, getTextPositions(display)[line] + 2, nodeStatus, -1, false, "online");
+    drawNodes(display, x + 1, getTextPositions(display)[line] + 2, nodeStatus, -1, false, MSG_ONLINE);
 #endif
     char uptimeStr[32] = "";
     uint32_t uptime = millis() / 1000;

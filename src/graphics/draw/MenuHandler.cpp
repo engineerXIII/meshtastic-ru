@@ -382,9 +382,9 @@ void menuHandler::TZPicker()
 void menuHandler::clockMenu()
 {
 #if defined(M5STACK_UNITC6L)
-    static const char *optionsArray[] = {MSG_BACK, MSG_CLOCK_TIMEFORMAT, "Timezone"};
+    static const char *optionsArray[] = {MSG_BACK, MSG_CLOCK_TIMEFORMAT, MSG_CLOCK_TIMEZONE};
 #else
-    static const char *optionsArray[] = {MSG_BACK, "Clock Face", MSG_CLOCK_TIMEFORMAT, "Timezone"};
+    static const char *optionsArray[] = {MSG_BACK, MSG_CLOCK_FACE, MSG_CLOCK_TIMEFORMAT, MSG_CLOCK_TIMEZONE};
 #endif
     enum optionsNumbers { Back = 0, Clock = 1, Time = 2, Timezone = 3 };
     BannerOverlayOptions bannerOptions;
@@ -410,9 +410,9 @@ void menuHandler::messageResponseMenu()
 {
     enum optionsNumbers { Back = 0, Dismiss = 1, Preset = 2, Freetext = 3, Aloud = 4, enumEnd = 5 };
 #if defined(M5STACK_UNITC6L)
-    static const char *optionsArray[enumEnd] = {MSG_BACK, "Dismiss", "Reply Preset"};
+    static const char *optionsArray[enumEnd] = {MSG_BACK, MSG_DISMISS, "Reply Preset"};
 #else
-    static const char *optionsArray[enumEnd] = {MSG_BACK, "Dismiss", "Reply via Preset"};
+    static const char *optionsArray[enumEnd] = {MSG_BACK, MSG_DISMISS, "Reply via Preset"};
 #endif
     static int optionsEnumArray[enumEnd] = {Back, Dismiss, Preset};
     int options = 3;
@@ -479,9 +479,9 @@ void menuHandler::homeBaseMenu()
     optionsEnumArray[options++] = Sleep;
 #endif
     if (config.position.gps_mode == meshtastic_Config_PositionConfig_GpsMode_ENABLED) {
-        optionsArray[options] = "Send Position";
+        optionsArray[options] = MSG_SEND_POSITION;
     } else {
-        optionsArray[options] = "Send Node Info";
+        optionsArray[options] = MSG_SEND_NODE_INFO;
     }
     optionsEnumArray[options++] = Position;
 #if defined(M5STACK_UNITC6L)
@@ -583,21 +583,21 @@ void menuHandler::systemBaseMenu()
     static int optionsEnumArray[enumEnd] = {Back};
     int options = 1;
 
-    optionsArray[options] = "Notifications";
+    optionsArray[options] = MSG_NOTIFICATIONS;
     optionsEnumArray[options++] = Notifications;
-    optionsArray[options] = "Display Options";
+    optionsArray[options] = MSG_DISPLAY_OPTIONS;
     optionsEnumArray[options++] = ScreenOptions;
 
 #if defined(M5STACK_UNITC6L)
     optionsArray[options] = "Bluetooth";
 #else
-    optionsArray[options] = "Bluetooth Toggle";
+    optionsArray[options] = MSG_BLUETOOTH_TOGGLE;
 #endif
     optionsEnumArray[options++] = Bluetooth;
 #if defined(M5STACK_UNITC6L)
-    optionsArray[options] = "Power";
+    optionsArray[options] = MSG_POWER;
 #else
-    optionsArray[options] = "Reboot/Shutdown";
+    optionsArray[options] = MSG_REBOOT_OR_SHUTDOWN;
 #endif
     optionsEnumArray[options++] = PowerMenu;
 
@@ -608,9 +608,9 @@ void menuHandler::systemBaseMenu()
 
     BannerOverlayOptions bannerOptions;
 #if defined(M5STACK_UNITC6L)
-    bannerOptions.message = "System";
+    bannerOptions.message = MSG_SYSTEM;
 #else
-    bannerOptions.message = "System Action";
+    bannerOptions.message = MSG_SYSTEM_ACTION;
 #endif
     bannerOptions.optionsArrayPtr = optionsArray;
     bannerOptions.optionsCount = options;
@@ -660,14 +660,14 @@ void menuHandler::favoriteBaseMenu()
     optionsArray[options] = "Trace Route";
     optionsEnumArray[options++] = TraceRoute;
 #endif
-    optionsArray[options] = "Remove Favorite";
+    optionsArray[options] = MSG_FAVORITE_REMOVE;
     optionsEnumArray[options++] = Remove;
 
     BannerOverlayOptions bannerOptions;
 #if defined(M5STACK_UNITC6L)
     bannerOptions.message = MSG_FAVORITES;
 #else
-    bannerOptions.message = "Favorites Action";
+    bannerOptions.message = MSG_FAVORITES_ACTION;
 #endif
     bannerOptions.optionsArrayPtr = optionsArray;
     bannerOptions.optionsEnumPtr = optionsEnumArray;
@@ -693,12 +693,12 @@ void menuHandler::positionBaseMenu()
 {
     enum optionsNumbers { Back, GPSToggle, GPSFormat, CompassMenu, CompassCalibrate, enumEnd };
 
-    static const char *optionsArray[enumEnd] = {MSG_BACK, "GPS Toggle", "GPS Format", "Compass"};
+    static const char *optionsArray[enumEnd] = {MSG_BACK, "GPS Toggle", MSG_GPS_FORMAT, MSG_GPS_COMPASS};
     static int optionsEnumArray[enumEnd] = {Back, GPSToggle, GPSFormat, CompassMenu};
     int options = 4;
 
     if (accelerometerThread) {
-        optionsArray[options] = "Compass Calibrate";
+        optionsArray[options] = MSG_GPS_COMPASS_CALIBRATE;
         optionsEnumArray[options++] = CompassCalibrate;
     }
 
@@ -885,11 +885,7 @@ void menuHandler::GPSFormatMenu()
                                          isHighResolution ? "Ordnance Survey Grid Ref" : "OSGR",
                                          isHighResolution ? "Maidenhead Locator" : "MLS"};
     BannerOverlayOptions bannerOptions;
-#ifdef OLED_RU
-    bannerOptions.message = "GPS Формат";
-#else
-    bannerOptions.message = "GPS Format";
-#endif
+    bannerOptions.message = MSG_GPS_FORMAT;
     bannerOptions.optionsArrayPtr = optionsArray;
     bannerOptions.optionsCount = 8;
     bannerOptions.bannerCallback = [](int selected) -> void {
@@ -938,7 +934,7 @@ void menuHandler::BluetoothToggleMenu()
 #if defined(M5STACK_UNITC6L)
     bannerOptions.message = "Bluetooth";
 #else
-    bannerOptions.message = "Toggle Bluetooth";
+    bannerOptions.message = MSG_BLUETOOTH_TOGGLE;
 #endif
     bannerOptions.optionsArrayPtr = optionsArray;
     bannerOptions.optionsCount = 3;
@@ -954,7 +950,7 @@ void menuHandler::BluetoothToggleMenu()
 
 void menuHandler::BuzzerModeMenu()
 {
-    static const char *optionsArray[] = {"All Enabled", MSG_DISABLED, "Notifications", "System Only", "DMs Only"};
+    static const char *optionsArray[] = {"All Enabled", MSG_DISABLED, MSG_NOTIFICATIONS, "System Only", "DMs Only"};
     BannerOverlayOptions bannerOptions;
     bannerOptions.message = "Buzzer Mode";
     bannerOptions.optionsArrayPtr = optionsArray;
@@ -1132,15 +1128,15 @@ void menuHandler::rebootMenu()
     static const char *optionsArray[] = {MSG_BACK, MSG_DISABLED};
     BannerOverlayOptions bannerOptions;
 #if defined(M5STACK_UNITC6L)
-    bannerOptions.message = "Reboot";
+    bannerOptions.message = MSG_REBOOT;
 #else
-    bannerOptions.message = "Reboot Device?";
+    bannerOptions.message = MSG_REBOOT_DEVICE;
 #endif
     bannerOptions.optionsArrayPtr = optionsArray;
     bannerOptions.optionsCount = 2;
     bannerOptions.bannerCallback = [](int selected) -> void {
         if (selected == 1) {
-            IF_SCREEN(screen->showSimpleBanner("Rebooting...", 0));
+            IF_SCREEN(screen->showSimpleBanner(MSG_REBOOT_BANNER, 0));
             nodeDB->saveToDisk();
             rebootAtMsec = millis() + DEFAULT_REBOOT_SECONDS * 1000;
         } else {
@@ -1308,7 +1304,7 @@ void menuHandler::notificationsMenu()
     int options = 2;
 
     BannerOverlayOptions bannerOptions;
-    bannerOptions.message = "Notifications";
+    bannerOptions.message = MSG_NOTIFICATIONS;
     bannerOptions.optionsArrayPtr = optionsArray;
     bannerOptions.optionsCount = options;
     bannerOptions.optionsEnumPtr = optionsEnumArray;
@@ -1349,24 +1345,24 @@ void menuHandler::screenOptionsMenu()
 
     // Only show brightness for B&W displays
     if (hasSupportBrightness) {
-        optionsArray[options] = "Brightness";
+        optionsArray[options] = MSG_DISPLAY_OPTIONS_BRIGHTNESS;
         optionsEnumArray[options++] = Brightness;
     }
 
     // Only show screen color for TFT displays
 #if defined(HELTEC_MESH_NODE_T114) || defined(HELTEC_VISION_MASTER_T190) || defined(T_DECK) || defined(T_LORA_PAGER) || HAS_TFT
-    optionsArray[options] = "Screen Color";
+    optionsArray[options] = MSG_DISPLAY_OPTIONS_SCREEN_COLOR;
     optionsEnumArray[options++] = ScreenColor;
 #endif
 
     optionsArray[options] = "Frame Visiblity Toggle";
     optionsEnumArray[options++] = FrameToggles;
 
-    optionsArray[options] = "Display Units";
+    optionsArray[options] = MSG_DISPLAY_OPTIONS_DISPLAY_UNITS;
     optionsEnumArray[options++] = DisplayUnits;
 
     BannerOverlayOptions bannerOptions;
-    bannerOptions.message = "Display Options";
+    bannerOptions.message = MSG_DISPLAY_OPTIONS;
     bannerOptions.optionsArrayPtr = optionsArray;
     bannerOptions.optionsCount = options;
     bannerOptions.optionsEnumPtr = optionsEnumArray;
@@ -1402,10 +1398,10 @@ void menuHandler::powerMenu()
     static int optionsEnumArray[4] = {Back};
     int options = 1;
 
-    optionsArray[options] = "Reboot";
+    optionsArray[options] = MSG_REBOOT;
     optionsEnumArray[options++] = Reboot;
 
-    optionsArray[options] = "Shutdown";
+    optionsArray[options] = MSG_SHUTDOWN;
     optionsEnumArray[options++] = Shutdown;
 
 #if HAS_TFT
@@ -1415,9 +1411,9 @@ void menuHandler::powerMenu()
 
     BannerOverlayOptions bannerOptions;
 #if defined(M5STACK_UNITC6L)
-    bannerOptions.message = "Power";
+    bannerOptions.message = MSG_POWER;
 #else
-    bannerOptions.message = "Reboot / Shutdown";
+    bannerOptions.message = MSG_REBOOT_OR_SHUTDOWN;
 #endif
     bannerOptions.optionsArrayPtr = optionsArray;
     bannerOptions.optionsCount = options;
