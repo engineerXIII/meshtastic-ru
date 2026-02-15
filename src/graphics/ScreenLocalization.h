@@ -1,0 +1,25 @@
+#include "ScreenFonts.h"
+
+#ifdef OLED_RU
+#define MSG_ONBOARD_BANNER "Приветствуем в Meshtastic!\nНажмите кнопку Выбора\nдля открытия меню\nи выбрать действиеы."
+#define MSG_ONBOARD_BANNER_TFT "Приветствуем в Meshtastic!\nCвайп для навигации и\nудерживать для выбора\nили открытия меню."
+#define MSG_ONBOARD_BANNER_BTN "Приветствуем в  Meshtastic!\nКликните для навигации и\nудерживать для выбора\nили открытия меню."
+#define MSG_OK "OK"
+#define MSG_GOT_IT "Понятно!"
+#define MSG_BACK "Назад"
+#define MSG_DEVICE_ROLE "Тип устройства"
+#define MSG_RADIO_PRESET "Пресет радио"
+#define MSG_LORA_REGION "LoRa Регион"
+#define MSG_LORA_ACTIONS "LoRa Действия"
+#else
+#define MSG_ONBOARD_BANNER "Welcome to Meshtastic!\nUse the Select button\nto open menus\nand make selections."
+#define MSG_ONBOARD_BANNER_TFT "Welcome to Meshtastic!\nSwipe to navigate and\nlong press to select\nor open a menu."
+#define MSG_ONBOARD_BANNER_BTN "Welcome to Meshtastic!\nClick to navigate and\nlong press to select\nor open a menu."
+#define MSG_OK "ОК"
+#define MSG_GOT_IT "Got it!"
+#define MSG_BACK "Back"
+#define MSG_DEVICE_ROLE "Device Role"
+#define MSG_RADIO_PRESET "Radio Preset"
+#define MSG_LORA_REGION "LoRa Region"
+#define MSG_LORA_ACTIONS "LoRa Actions"
+#endif

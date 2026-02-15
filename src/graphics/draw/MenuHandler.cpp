@@ -8,6 +8,7 @@
 #include "NodeDB.h"
 #include "buzz.h"
 #include "graphics/Screen.h"
+#include "graphics/ScreenLocalization.h"
 #include "graphics/SharedUIDisplay.h"
 #include "graphics/draw/UIRenderer.h"
 #include "input/RotaryEncoderInterruptImpl1.h"
@@ -31,10 +32,10 @@ uint8_t test_count = 0;
 
 void menuHandler::loraMenu()
 {
-    static const char *optionsArray[] = {"Back", "Device Role", "Radio Preset", "LoRa Region"};
+    static const char *optionsArray[] = {MSG_BACK, MSG_DEVICE_ROLE, MSG_RADIO_PRESET, MSG_LORA_REGION};
     enum optionsNumbers { Back = 0, device_role_picker = 1, radio_preset_picker = 2, lora_picker = 3 };
     BannerOverlayOptions bannerOptions;
-    bannerOptions.message = "LoRa Actions";
+    bannerOptions.message = MSG_LORA_ACTIONS;
     bannerOptions.optionsArrayPtr = optionsArray;
     bannerOptions.optionsCount = 4;
     bannerOptions.bannerCallback = [](int selected) -> void {
@@ -53,15 +54,15 @@ void menuHandler::loraMenu()
 
 void menuHandler::OnboardMessage()
 {
-    static const char *optionsArray[] = {"OK", "Got it!"};
+    static const char *optionsArray[] = {MSG_OK, MSG_GOT_IT};
     enum optionsNumbers { OK, got };
     BannerOverlayOptions bannerOptions;
 #if HAS_TFT
-    bannerOptions.message = "Welcome to Meshtastic!\nSwipe to navigate and\nlong press to select\nor open a menu.";
+    bannerOptions.message = MSG_ONBOARD_BANNER_TFT;
 #elif defined(BUTTON_PIN)
-    bannerOptions.message = "Welcome to Meshtastic!\nClick to navigate and\nlong press to select\nor open a menu.";
+    bannerOptions.message = MSG_ONBOARD_BANNER_BTN;
 #else
-    bannerOptions.message = "Welcome to Meshtastic!\nUse the Select button\nto open menus\nand make selections.";
+    bannerOptions.message = MSG_ONBOARD_BANNER;
 #endif
     bannerOptions.optionsArrayPtr = optionsArray;
     bannerOptions.optionsCount = 2;
@@ -74,7 +75,7 @@ void menuHandler::OnboardMessage()
 
 void menuHandler::LoraRegionPicker(uint32_t duration)
 {
-    static const char *optionsArray[] = {"Back",
+    static const char *optionsArray[] = {MSG_BACK,
                                          "US",
                                          "EU_433",
                                          "EU_868",
@@ -105,7 +106,7 @@ void menuHandler::LoraRegionPicker(uint32_t duration)
                                          "BR_902"};
     BannerOverlayOptions bannerOptions;
 #if defined(M5STACK_UNITC6L)
-    bannerOptions.message = "LoRa Region";
+    bannerOptions.message = MSG_LORA_REGION;
 #else
     bannerOptions.message = "Set the LoRa region";
 #endif
@@ -264,7 +265,11 @@ void menuHandler::TwelveHourPicker()
 // Reusable confirmation prompt function
 void menuHandler::showConfirmationBanner(const char *message, std::function<void()> onConfirm)
 {
+#ifdef OLED_RU
+    static const char *confirmOptions[] = {"Нет", "Да"};
+#else
     static const char *confirmOptions[] = {"No", "Yes"};
+#endif
     BannerOverlayOptions confirmBanner;
     confirmBanner.message = message;
     confirmBanner.optionsArrayPtr = confirmOptions;
@@ -495,10 +500,18 @@ void menuHandler::homeBaseMenu()
     }
 
     BannerOverlayOptions bannerOptions;
+#ifdef OLED_RU
+#if defined(M5STACK_UNITC6L)
+    bannerOptions.message = "Главная";
+#else
+    bannerOptions.message = "Действия";
+#endif
+#else
 #if defined(M5STACK_UNITC6L)
     bannerOptions.message = "Home";
 #else
     bannerOptions.message = "Home Action";
+#endif
 #endif
     bannerOptions.optionsArrayPtr = optionsArray;
     bannerOptions.optionsEnumPtr = optionsEnumArray;
@@ -546,7 +559,17 @@ void menuHandler::textMessageMenu()
 void menuHandler::textMessageBaseMenu()
 {
     enum optionsNumbers { Back, Preset, Freetext, enumEnd };
-
+#ifdef OLED_RU
+    static const char *optionsArray[enumEnd] = {"Назад"};
+    static int optionsEnumArray[enumEnd] = {Back};
+    int options = 1;
+    optionsArray[options] = "Новое Шаб Сбщ";
+    optionsEnumArray[options++] = Preset;
+    if (kb_found) {
+        optionsArray[options] = "Новое Сбщ";
+        optionsEnumArray[options++] = Freetext;
+    }
+#else
     static const char *optionsArray[enumEnd] = {"Back"};
     static int optionsEnumArray[enumEnd] = {Back};
     int options = 1;
@@ -556,9 +579,14 @@ void menuHandler::textMessageBaseMenu()
         optionsArray[options] = "New Freetext Msg";
         optionsEnumArray[options++] = Freetext;
     }
+#endif
 
     BannerOverlayOptions bannerOptions;
+#ifdef OLED_RU
+    bannerOptions.message = "Действия";
+#else
     bannerOptions.message = "Message Action";
+#endif
     bannerOptions.optionsArrayPtr = optionsArray;
     bannerOptions.optionsEnumPtr = optionsEnumArray;
     bannerOptions.optionsCount = options;
@@ -881,7 +909,11 @@ void menuHandler::GPSFormatMenu()
                                          isHighResolution ? "Ordnance Survey Grid Ref" : "OSGR",
                                          isHighResolution ? "Maidenhead Locator" : "MLS"};
     BannerOverlayOptions bannerOptions;
+#ifdef OLED_RU
+    bannerOptions.message = "GPS Формат";
+#else
     bannerOptions.message = "GPS Format";
+#endif
     bannerOptions.optionsArrayPtr = optionsArray;
     bannerOptions.optionsCount = 8;
     bannerOptions.bannerCallback = [](int selected) -> void {
