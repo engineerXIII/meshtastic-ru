@@ -108,7 +108,7 @@ void menuHandler::LoraRegionPicker(uint32_t duration)
 #if defined(M5STACK_UNITC6L)
     bannerOptions.message = MSG_LORA_REGION;
 #else
-    bannerOptions.message = "Set the LoRa region";
+    bannerOptions.message = MSG_LORA_REGION_SET;
 #endif
     bannerOptions.durationMs = duration;
     bannerOptions.optionsArrayPtr = optionsArray;
@@ -161,7 +161,7 @@ void menuHandler::LoraRegionPicker(uint32_t duration)
 
 void menuHandler::DeviceRolePicker()
 {
-    static const char *optionsArray[] = {"Back", "Client", "Client Mute", "Lost and Found", "Tracker"};
+    static const char *optionsArray[] = {MSG_BACK, "Client", "Client Mute", "Lost and Found", "Tracker"};
     enum optionsNumbers {
         Back = 0,
         devicerole_client = 1,
@@ -170,7 +170,7 @@ void menuHandler::DeviceRolePicker()
         devicerole_tracker = 4
     };
     BannerOverlayOptions bannerOptions;
-    bannerOptions.message = "Device Role";
+    bannerOptions.message = MSG_DEVICE_ROLE;
     bannerOptions.optionsArrayPtr = optionsArray;
     bannerOptions.optionsCount = 5;
     bannerOptions.bannerCallback = [](int selected) -> void {
@@ -195,7 +195,7 @@ void menuHandler::DeviceRolePicker()
 
 void menuHandler::RadioPresetPicker()
 {
-    static const char *optionsArray[] = {"Back",       "LongSlow",  "LongModerate", "LongFast",  "MediumSlow",
+    static const char *optionsArray[] = {MSG_BACK,       "LongSlow",  "LongModerate", "LongFast",  "MediumSlow",
                                          "MediumFast", "ShortSlow", "ShortFast",    "ShortTurbo"};
     enum optionsNumbers {
         Back = 0,
@@ -209,7 +209,7 @@ void menuHandler::RadioPresetPicker()
         radiopreset_ShortTurbo = 8
     };
     BannerOverlayOptions bannerOptions;
-    bannerOptions.message = "Radio Preset";
+    bannerOptions.message = MSG_RADIO_PRESET;
     bannerOptions.optionsArrayPtr = optionsArray;
     bannerOptions.optionsCount = 9;
     bannerOptions.bannerCallback = [](int selected) -> void {
@@ -242,10 +242,10 @@ void menuHandler::RadioPresetPicker()
 
 void menuHandler::TwelveHourPicker()
 {
-    static const char *optionsArray[] = {"Back", "12-hour", "24-hour"};
+    static const char *optionsArray[] = {MSG_BACK, MSG_CLOCK_FORMAT_12H, MSG_CLOCK_FORMAT_24H};
     enum optionsNumbers { Back = 0, twelve = 1, twentyfour = 2 };
     BannerOverlayOptions bannerOptions;
-    bannerOptions.message = "Time Format";
+    bannerOptions.message = MSG_CLOCK_TIMEFORMAT;
     bannerOptions.optionsArrayPtr = optionsArray;
     bannerOptions.optionsCount = 3;
     bannerOptions.bannerCallback = [](int selected) -> void {
@@ -265,11 +265,7 @@ void menuHandler::TwelveHourPicker()
 // Reusable confirmation prompt function
 void menuHandler::showConfirmationBanner(const char *message, std::function<void()> onConfirm)
 {
-#ifdef OLED_RU
-    static const char *confirmOptions[] = {"Нет", "Да"};
-#else
-    static const char *confirmOptions[] = {"No", "Yes"};
-#endif
+    static const char *confirmOptions[] = {MSG_NO, MSG_YES};
     BannerOverlayOptions confirmBanner;
     confirmBanner.message = message;
     confirmBanner.optionsArrayPtr = confirmOptions;
@@ -284,7 +280,7 @@ void menuHandler::showConfirmationBanner(const char *message, std::function<void
 
 void menuHandler::ClockFacePicker()
 {
-    static const char *optionsArray[] = {"Back", "Digital", "Analog"};
+    static const char *optionsArray[] = {MSG_BACK, "Digital", "Analog"};
     enum optionsNumbers { Back = 0, Digital = 1, Analog = 2 };
     BannerOverlayOptions bannerOptions;
     bannerOptions.message = "Which Face?";
@@ -310,7 +306,7 @@ void menuHandler::ClockFacePicker()
 
 void menuHandler::TZPicker()
 {
-    static const char *optionsArray[] = {"Back",
+    static const char *optionsArray[] = {MSG_BACK,
                                          "US/Hawaii",
                                          "US/Alaska",
                                          "US/Pacific",
@@ -386,9 +382,9 @@ void menuHandler::TZPicker()
 void menuHandler::clockMenu()
 {
 #if defined(M5STACK_UNITC6L)
-    static const char *optionsArray[] = {"Back", "Time Format", "Timezone"};
+    static const char *optionsArray[] = {MSG_BACK, MSG_CLOCK_TIMEFORMAT, "Timezone"};
 #else
-    static const char *optionsArray[] = {"Back", "Clock Face", "Time Format", "Timezone"};
+    static const char *optionsArray[] = {MSG_BACK, "Clock Face", MSG_CLOCK_TIMEFORMAT, "Timezone"};
 #endif
     enum optionsNumbers { Back = 0, Clock = 1, Time = 2, Timezone = 3 };
     BannerOverlayOptions bannerOptions;
@@ -414,9 +410,9 @@ void menuHandler::messageResponseMenu()
 {
     enum optionsNumbers { Back = 0, Dismiss = 1, Preset = 2, Freetext = 3, Aloud = 4, enumEnd = 5 };
 #if defined(M5STACK_UNITC6L)
-    static const char *optionsArray[enumEnd] = {"Back", "Dismiss", "Reply Preset"};
+    static const char *optionsArray[enumEnd] = {MSG_BACK, "Dismiss", "Reply Preset"};
 #else
-    static const char *optionsArray[enumEnd] = {"Back", "Dismiss", "Reply via Preset"};
+    static const char *optionsArray[enumEnd] = {MSG_BACK, "Dismiss", "Reply via Preset"};
 #endif
     static int optionsEnumArray[enumEnd] = {Back, Dismiss, Preset};
     int options = 3;
@@ -471,12 +467,12 @@ void menuHandler::homeBaseMenu()
 {
     enum optionsNumbers { Back, Backlight, Position, Preset, Freetext, Sleep, enumEnd };
 
-    static const char *optionsArray[enumEnd] = {"Back"};
+    static const char *optionsArray[enumEnd] = {MSG_BACK};
     static int optionsEnumArray[enumEnd] = {Back};
     int options = 1;
 
 #if defined(PIN_EINK_EN) || defined(PCA_PIN_EINK_EN)
-    optionsArray[options] = "Toggle Backlight";
+    optionsArray[options] = MSG_TOGGLE_BACKLIGHT;
     optionsEnumArray[options++] = Backlight;
 #else
     optionsArray[options] = "Sleep Screen";
@@ -500,18 +496,10 @@ void menuHandler::homeBaseMenu()
     }
 
     BannerOverlayOptions bannerOptions;
-#ifdef OLED_RU
 #if defined(M5STACK_UNITC6L)
-    bannerOptions.message = "Главная";
+    bannerOptions.message = MSG_HOME;
 #else
-    bannerOptions.message = "Действия";
-#endif
-#else
-#if defined(M5STACK_UNITC6L)
-    bannerOptions.message = "Home";
-#else
-    bannerOptions.message = "Home Action";
-#endif
+    bannerOptions.message = MSG_HOME_ACTION;
 #endif
     bannerOptions.optionsArrayPtr = optionsArray;
     bannerOptions.optionsEnumPtr = optionsEnumArray;
@@ -559,18 +547,7 @@ void menuHandler::textMessageMenu()
 void menuHandler::textMessageBaseMenu()
 {
     enum optionsNumbers { Back, Preset, Freetext, enumEnd };
-#ifdef OLED_RU
-    static const char *optionsArray[enumEnd] = {"Назад"};
-    static int optionsEnumArray[enumEnd] = {Back};
-    int options = 1;
-    optionsArray[options] = "Новое Шаб Сбщ";
-    optionsEnumArray[options++] = Preset;
-    if (kb_found) {
-        optionsArray[options] = "Новое Сбщ";
-        optionsEnumArray[options++] = Freetext;
-    }
-#else
-    static const char *optionsArray[enumEnd] = {"Back"};
+    static const char *optionsArray[enumEnd] = {MSG_BACK};
     static int optionsEnumArray[enumEnd] = {Back};
     int options = 1;
     optionsArray[options] = "New Preset Msg";
@@ -579,7 +556,6 @@ void menuHandler::textMessageBaseMenu()
         optionsArray[options] = "New Freetext Msg";
         optionsEnumArray[options++] = Freetext;
     }
-#endif
 
     BannerOverlayOptions bannerOptions;
 #ifdef OLED_RU
@@ -603,7 +579,7 @@ void menuHandler::textMessageBaseMenu()
 void menuHandler::systemBaseMenu()
 {
     enum optionsNumbers { Back, Notifications, ScreenOptions, Bluetooth, PowerMenu, Test, enumEnd };
-    static const char *optionsArray[enumEnd] = {"Back"};
+    static const char *optionsArray[enumEnd] = {MSG_BACK};
     static int optionsEnumArray[enumEnd] = {Back};
     int options = 1;
 
@@ -669,9 +645,9 @@ void menuHandler::favoriteBaseMenu()
 {
     enum optionsNumbers { Back, Preset, Freetext, Remove, TraceRoute, enumEnd };
 #if defined(M5STACK_UNITC6L)
-    static const char *optionsArray[enumEnd] = {"Back", "New Preset"};
+    static const char *optionsArray[enumEnd] = {MSG_BACK, "New Preset"};
 #else
-    static const char *optionsArray[enumEnd] = {"Back", "New Preset Msg"};
+    static const char *optionsArray[enumEnd] = {MSG_BACK, "New Preset Msg"};
 #endif
     static int optionsEnumArray[enumEnd] = {Back, Preset};
     int options = 2;
@@ -689,7 +665,7 @@ void menuHandler::favoriteBaseMenu()
 
     BannerOverlayOptions bannerOptions;
 #if defined(M5STACK_UNITC6L)
-    bannerOptions.message = "Favorites";
+    bannerOptions.message = MSG_FAVORITES;
 #else
     bannerOptions.message = "Favorites Action";
 #endif
@@ -717,7 +693,7 @@ void menuHandler::positionBaseMenu()
 {
     enum optionsNumbers { Back, GPSToggle, GPSFormat, CompassMenu, CompassCalibrate, enumEnd };
 
-    static const char *optionsArray[enumEnd] = {"Back", "GPS Toggle", "GPS Format", "Compass"};
+    static const char *optionsArray[enumEnd] = {MSG_BACK, "GPS Toggle", "GPS Format", "Compass"};
     static int optionsEnumArray[enumEnd] = {Back, GPSToggle, GPSFormat, CompassMenu};
     int options = 4;
 
@@ -752,9 +728,9 @@ void menuHandler::nodeListMenu()
 {
     enum optionsNumbers { Back, Favorite, TraceRoute, Verify, Reset, enumEnd };
 #if defined(M5STACK_UNITC6L)
-    static const char *optionsArray[] = {"Back", "Add Favorite", "Reset Node"};
+    static const char *optionsArray[] = {MSG_BACK, "Add Favorite", "Reset Node"};
 #else
-    static const char *optionsArray[] = {"Back", "Add Favorite", "Trace Route", "Key Verification", "Reset NodeDB"};
+    static const char *optionsArray[] = {MSG_BACK, "Add Favorite", "Trace Route", "Key Verification", "Reset NodeDB"};
 #endif
     BannerOverlayOptions bannerOptions;
     bannerOptions.message = "Node Action";
@@ -785,7 +761,7 @@ void menuHandler::nodeListMenu()
 void menuHandler::nodeNameLengthMenu()
 {
     enum OptionsNumbers { Back, Long, Short };
-    static const char *optionsArray[] = {"Back", "Long", "Short"};
+    static const char *optionsArray[] = {MSG_BACK, "Long", "Short"};
     BannerOverlayOptions bannerOptions;
     bannerOptions.message = "Node Name Length";
     bannerOptions.optionsArrayPtr = optionsArray;
@@ -810,7 +786,7 @@ void menuHandler::nodeNameLengthMenu()
 
 void menuHandler::resetNodeDBMenu()
 {
-    static const char *optionsArray[] = {"Back", "Reset All", "Preserve Favorites"};
+    static const char *optionsArray[] = {MSG_BACK, "Reset All", "Preserve Favorites"};
     BannerOverlayOptions bannerOptions;
     bannerOptions.message = "Confirm Reset NodeDB";
     bannerOptions.optionsArrayPtr = optionsArray;
@@ -836,7 +812,7 @@ void menuHandler::resetNodeDBMenu()
 void menuHandler::compassNorthMenu()
 {
     enum optionsNumbers { Back, Dynamic, Fixed, Freeze };
-    static const char *optionsArray[] = {"Back", "Dynamic", "Fixed Ring", "Freeze Heading"};
+    static const char *optionsArray[] = {MSG_BACK, "Dynamic", "Fixed Ring", "Freeze Heading"};
     BannerOverlayOptions bannerOptions;
     bannerOptions.message = "North Directions?";
     bannerOptions.optionsArrayPtr = optionsArray;
@@ -873,7 +849,7 @@ void menuHandler::compassNorthMenu()
 void menuHandler::GPSToggleMenu()
 {
 
-    static const char *optionsArray[] = {"Back", "Enabled", "Disabled"};
+    static const char *optionsArray[] = {MSG_BACK, MSG_ENABLED, MSG_DISABLED};
     BannerOverlayOptions bannerOptions;
     bannerOptions.message = "Toggle GPS";
     bannerOptions.optionsArrayPtr = optionsArray;
@@ -900,7 +876,7 @@ void menuHandler::GPSToggleMenu()
 void menuHandler::GPSFormatMenu()
 {
 
-    static const char *optionsArray[] = {"Back",
+    static const char *optionsArray[] = {MSG_BACK,
                                          isHighResolution ? "Decimal Degrees" : "DEC",
                                          isHighResolution ? "Degrees Minutes Seconds" : "DMS",
                                          isHighResolution ? "Universal Transverse Mercator" : "UTM",
@@ -957,7 +933,7 @@ void menuHandler::GPSFormatMenu()
 
 void menuHandler::BluetoothToggleMenu()
 {
-    static const char *optionsArray[] = {"Back", "Enabled", "Disabled"};
+    static const char *optionsArray[] = {MSG_BACK, MSG_ENABLED, MSG_DISABLED};
     BannerOverlayOptions bannerOptions;
 #if defined(M5STACK_UNITC6L)
     bannerOptions.message = "Bluetooth";
@@ -978,7 +954,7 @@ void menuHandler::BluetoothToggleMenu()
 
 void menuHandler::BuzzerModeMenu()
 {
-    static const char *optionsArray[] = {"All Enabled", "Disabled", "Notifications", "System Only", "DMs Only"};
+    static const char *optionsArray[] = {"All Enabled", MSG_DISABLED, "Notifications", "System Only", "DMs Only"};
     BannerOverlayOptions bannerOptions;
     bannerOptions.message = "Buzzer Mode";
     bannerOptions.optionsArrayPtr = optionsArray;
@@ -993,7 +969,7 @@ void menuHandler::BuzzerModeMenu()
 
 void menuHandler::BrightnessPickerMenu()
 {
-    static const char *optionsArray[] = {"Back", "Low", "Medium", "High"};
+    static const char *optionsArray[] = {MSG_BACK, "Low", "Medium", "High"};
 
     // Get current brightness level to set initial selection
     int currentSelection = 1; // Default to Medium
@@ -1041,7 +1017,7 @@ void menuHandler::BrightnessPickerMenu()
 
 void menuHandler::switchToMUIMenu()
 {
-    static const char *optionsArray[] = {"No", "Yes"};
+    static const char *optionsArray[] = {MSG_NO, MSG_YES};
     BannerOverlayOptions bannerOptions;
     bannerOptions.message = "Switch to MUI?";
     bannerOptions.optionsArrayPtr = optionsArray;
@@ -1059,7 +1035,7 @@ void menuHandler::switchToMUIMenu()
 
 void menuHandler::TFTColorPickerMenu(OLEDDisplay *display)
 {
-    static const char *optionsArray[] = {"Back", "Default", "Meshtastic Green", "Yellow", "Red", "Orange", "Purple", "Teal",
+    static const char *optionsArray[] = {MSG_BACK, "Default", "Meshtastic Green", "Yellow", "Red", "Orange", "Purple", "Teal",
                                          "Pink", "White"};
     BannerOverlayOptions bannerOptions;
     bannerOptions.message = "Select Screen Color";
@@ -1153,7 +1129,7 @@ void menuHandler::TFTColorPickerMenu(OLEDDisplay *display)
 
 void menuHandler::rebootMenu()
 {
-    static const char *optionsArray[] = {"Back", "Confirm"};
+    static const char *optionsArray[] = {MSG_BACK, MSG_DISABLED};
     BannerOverlayOptions bannerOptions;
 #if defined(M5STACK_UNITC6L)
     bannerOptions.message = "Reboot";
@@ -1177,12 +1153,12 @@ void menuHandler::rebootMenu()
 
 void menuHandler::shutdownMenu()
 {
-    static const char *optionsArray[] = {"Back", "Confirm"};
+    static const char *optionsArray[] = {MSG_BACK, MSG_CONFIRM};
     BannerOverlayOptions bannerOptions;
 #if defined(M5STACK_UNITC6L)
-    bannerOptions.message = "Shutdown";
+    bannerOptions.message = MSG_SHUTDOWN;
 #else
-    bannerOptions.message = "Shutdown Device?";
+    bannerOptions.message = MSG_SHUTDOWN_DEVICE;
 #endif
     bannerOptions.optionsArrayPtr = optionsArray;
     bannerOptions.optionsCount = 2;
@@ -1215,7 +1191,7 @@ void menuHandler::addFavoriteMenu()
 void menuHandler::removeFavoriteMenu()
 {
 
-    static const char *optionsArray[] = {"Back", "Yes"};
+    static const char *optionsArray[] = {MSG_BACK, MSG_YES};
     BannerOverlayOptions bannerOptions;
     std::string message = "Unfavorite This Node?\n";
     auto node = nodeDB->getMeshNode(graphics::UIRenderer::currentFavoriteNodeNum);
@@ -1249,7 +1225,7 @@ void menuHandler::testMenu()
 {
 
     enum optionsNumbers { Back, NumberPicker, ShowChirpy };
-    static const char *optionsArray[4] = {"Back"};
+    static const char *optionsArray[4] = {MSG_BACK};
     static int optionsEnumArray[4] = {Back};
     int options = 1;
 
@@ -1290,7 +1266,7 @@ void menuHandler::wifiBaseMenu()
 {
     enum optionsNumbers { Back, Wifi_toggle };
 
-    static const char *optionsArray[] = {"Back", "WiFi Toggle"};
+    static const char *optionsArray[] = {MSG_BACK, "WiFi Toggle"};
     BannerOverlayOptions bannerOptions;
     bannerOptions.message = "WiFi Menu";
     bannerOptions.optionsArrayPtr = optionsArray;
@@ -1308,7 +1284,7 @@ void menuHandler::wifiToggleMenu()
 {
     enum optionsNumbers { Back, Wifi_toggle };
 
-    static const char *optionsArray[] = {"Back", "Disable"};
+    static const char *optionsArray[] = {MSG_BACK, MSG_DISABLE};
     BannerOverlayOptions bannerOptions;
     bannerOptions.message = "Disable Wifi and\nEnable Bluetooth?";
     bannerOptions.optionsArrayPtr = optionsArray;
@@ -1327,7 +1303,7 @@ void menuHandler::wifiToggleMenu()
 void menuHandler::notificationsMenu()
 {
     enum optionsNumbers { Back, BuzzerActions };
-    static const char *optionsArray[] = {"Back", "Buzzer Actions"};
+    static const char *optionsArray[] = {MSG_BACK, "Buzzer Actions"};
     static int optionsEnumArray[] = {Back, BuzzerActions};
     int options = 2;
 
@@ -1362,7 +1338,7 @@ void menuHandler::screenOptionsMenu()
 #endif
 
     enum optionsNumbers { Back, NodeNameLength, Brightness, ScreenColor, FrameToggles, DisplayUnits };
-    static const char *optionsArray[5] = {"Back"};
+    static const char *optionsArray[5] = {MSG_BACK};
     static int optionsEnumArray[5] = {Back};
     int options = 1;
 
@@ -1422,7 +1398,7 @@ void menuHandler::powerMenu()
 {
 
     enum optionsNumbers { Back, Reboot, Shutdown, MUI };
-    static const char *optionsArray[4] = {"Back"};
+    static const char *optionsArray[4] = {MSG_BACK};
     static int optionsEnumArray[4] = {Back};
     int options = 1;
 
@@ -1625,7 +1601,7 @@ void menuHandler::DisplayUnits_menu()
 {
     enum optionsNumbers { Back, MetricUnits, ImperialUnits };
 
-    static const char *optionsArray[] = {"Back", "Metric", "Imperial"};
+    static const char *optionsArray[] = {MSG_BACK, "Metric", "Imperial"};
     BannerOverlayOptions bannerOptions;
     bannerOptions.message = " Select display units";
     bannerOptions.optionsArrayPtr = optionsArray;
