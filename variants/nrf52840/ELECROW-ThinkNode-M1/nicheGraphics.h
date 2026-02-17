@@ -56,9 +56,15 @@ void setupNicheGraphics()
     inkhud->setDisplayResilience(10, 1.5);
 
     // Select fonts
+    #ifdef INKHUD_RU
+    InkHUD::Applet::fontLarge = FREESANS_12PT_WIN1251;
+    InkHUD::Applet::fontMedium = FREESANS_9PT_WIN1251;
+    InkHUD::Applet::fontSmall = FREESANS_6PT_WIN1251;
+    #else 
     InkHUD::Applet::fontLarge = FREESANS_12PT_WIN1252;
     InkHUD::Applet::fontMedium = FREESANS_9PT_WIN1252;
     InkHUD::Applet::fontSmall = FREESANS_6PT_WIN1252;
+    #endif
 
     // Customize default settings
     inkhud->persistence->settings.userTiles.maxCount = 2;              // Two applets side-by-side
