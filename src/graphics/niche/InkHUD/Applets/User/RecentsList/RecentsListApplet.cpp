@@ -138,7 +138,8 @@ std::string InkHUD::RecentsListApplet::getHeaderText()
     // Print the length of our "Recents" time-window
     text += "Last ";
     text += to_string(settings->recentlyActiveSeconds / 60);
-    text += " mins";
+    text += " ";
+    text += INK_APPLET_min;
 
     // Print the node count
     const uint16_t nodeCount = ages.size();

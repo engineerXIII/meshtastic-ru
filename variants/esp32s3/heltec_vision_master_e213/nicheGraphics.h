@@ -88,13 +88,13 @@ void setupNicheGraphics()
 
     // Pick applets
     // Note: order of applets determines priority of "auto-show" feature
-    inkhud->addApplet("All Messages", new InkHUD::AllMessageApplet, true, true); // Activated, autoshown
+    inkhud->addApplet(INK_APPLET_ALL_MESSAGES, new InkHUD::AllMessageApplet, true, true); // Activated, autoshown
     inkhud->addApplet("DMs", new InkHUD::DMApplet);                              // -
-    inkhud->addApplet("Channel 0", new InkHUD::ThreadedMessageApplet(0));        // -
-    inkhud->addApplet("Channel 1", new InkHUD::ThreadedMessageApplet(1));        // -
-    inkhud->addApplet("Positions", new InkHUD::PositionsApplet, true);           // Activated
-    inkhud->addApplet("Recents List", new InkHUD::RecentsListApplet);            // -
-    inkhud->addApplet("Heard", new InkHUD::HeardApplet, true, false, 0);         // Activated, not autoshown, default on tile 0
+    inkhud->addApplet(INK_APPLET_CHANNEL_0, new InkHUD::ThreadedMessageApplet(0));        // -
+    inkhud->addApplet(INK_APPLET_CHANNEL_1, new InkHUD::ThreadedMessageApplet(1));        // -
+    inkhud->addApplet(INK_APPLET_POSITIONS, new InkHUD::PositionsApplet, true);           // Activated
+    inkhud->addApplet(INK_APPLET_RECENT_LIST, new InkHUD::RecentsListApplet);            // -
+    inkhud->addApplet(INK_APPLET_HEARD, new InkHUD::HeardApplet, true, false, 0);         // Activated, not autoshown, default on tile 0
 
     // Start running InkHUD
     inkhud->begin();

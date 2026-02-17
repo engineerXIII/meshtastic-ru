@@ -30,11 +30,12 @@ void InkHUD::ThreadedMessageApplet::onRender()
 
     // Header text
     std::string headerText;
-    headerText += "Channel ";
+    headerText += INK_APPLET_CHANNEL;
+    headerText += " ";
     headerText += to_string(channelIndex);
     headerText += ": ";
     if (channels.isDefaultChannel(channelIndex))
-        headerText += "Public";
+        headerText += INK_APPLET_CHANNEL_PUBLIC;
     else
         headerText += channels.getByIndex(channelIndex).settings.name;
 

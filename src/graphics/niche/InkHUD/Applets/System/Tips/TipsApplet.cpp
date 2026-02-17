@@ -76,7 +76,7 @@ void InkHUD::TipsApplet::onRender()
         printAt(0, cursorY, "More info at meshtastic.org");
 
         setFont(fontSmall);
-        printAt(0, Y(1.0), "Press button to continue", LEFT, BOTTOM);
+        printAt(0, Y(1.0), INK_APPLET_ONBOARD_PRESS_BTN_CONTINUE, LEFT, BOTTOM);
     } break;
 
     case Tip::SAFE_SHUTDOWN: {
@@ -90,7 +90,7 @@ void InkHUD::TipsApplet::onRender()
         shutdown += "This ensures data is saved.";
         printWrapped(0, fontMedium.lineHeight() * 1.5, width(), shutdown);
 
-        printAt(0, Y(1.0), "Press button to continue", LEFT, BOTTOM);
+        printAt(0, Y(1.0), INK_APPLET_ONBOARD_PRESS_BTN_CONTINUE, LEFT, BOTTOM);
 
     } break;
 
@@ -102,7 +102,7 @@ void InkHUD::TipsApplet::onRender()
         printWrapped(0, fontMedium.lineHeight() * 1.5, width(),
                      "Configure & control display with the InkHUD menu. Optional features, layout, rotation, and more.");
 
-        printAt(0, Y(1.0), "Press button to continue", LEFT, BOTTOM);
+        printAt(0, Y(1.0), INK_APPLET_ONBOARD_PRESS_BTN_CONTINUE, LEFT, BOTTOM);
     } break;
 
     case Tip::BUTTONS: {
@@ -119,7 +119,7 @@ void InkHUD::TipsApplet::onRender()
         printAt(0, cursorY, "- long press: select / open menu");
         cursorY += fontSmall.lineHeight() * 1.5;
 
-        printAt(0, Y(1.0), "Press button to continue", LEFT, BOTTOM);
+        printAt(0, Y(1.0), INK_APPLET_ONBOARD_PRESS_BTN_CONTINUE, LEFT, BOTTOM);
     } break;
 
     case Tip::ROTATION: {
@@ -130,7 +130,7 @@ void InkHUD::TipsApplet::onRender()
         printWrapped(0, fontMedium.lineHeight() * 1.5, width(),
                      "To rotate the display, use the InkHUD menu. Long-press the user button > Options > Rotate.");
 
-        printAt(0, Y(1.0), "Press button to continue", LEFT, BOTTOM);
+        printAt(0, Y(1.0), INK_APPLET_ONBOARD_PRESS_BTN_CONTINUE, LEFT, BOTTOM);
 
         // Revert the "flip screen" setting, preventing this message showing again
         config.display.flip_screen = false;
@@ -182,7 +182,7 @@ void InkHUD::TipsApplet::renderWelcome()
 
     // Block 3 - press to continue
     // ============================
-    printAt(X(0.5), Y(1), "Press button to continue", CENTER, BOTTOM);
+    printAt(X(0.5), Y(1), INK_APPLET_ONBOARD_PRESS_BTN_CONTINUE, CENTER, BOTTOM);
 }
 
 void InkHUD::TipsApplet::onForeground()

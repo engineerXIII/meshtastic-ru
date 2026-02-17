@@ -18,7 +18,7 @@ InkHUD::LogoApplet::LogoApplet() : concurrency::OSThread("LogoApplet")
         fontTitle = fontMedium;
         textLeft = xstr(APP_VERSION_SHORT);
         textRight = parseShortName(ourNode);
-        textTitle = "Meshtastic";
+        textTitle = INK_APPLET_MESHTASTIC;
     } else {
         fontTitle = fontSmall;
         textLeft = "";
@@ -130,7 +130,7 @@ void InkHUD::LogoApplet::onShutdown()
 
     textLeft = "";
     textRight = "";
-    textTitle = "Shutting Down...";
+    textTitle = INK_APPLET_SHUTDOWN_BANNER;
     fontTitle = fontSmall;
 
     // Draw a shutting down screen, twice.
@@ -161,7 +161,7 @@ void InkHUD::LogoApplet::onReboot()
 
     textLeft = "";
     textRight = "";
-    textTitle = "Rebooting...";
+    textTitle = INK_APPLET_REBOOT_BANNER;
     fontTitle = fontSmall;
 
     inkhud->forceUpdate(Drivers::EInk::FULL, false);

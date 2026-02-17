@@ -280,13 +280,13 @@ void InkHUD::MenuApplet::showPage(MenuPage page)
     case ROOT:
         // Optional: next applet
         if (settings->optionalMenuItems.nextTile && settings->userTiles.count > 1)
-            items.push_back(MenuItem("Next Tile", MenuAction::NEXT_TILE, MenuPage::ROOT)); // Only if multiple applets shown
+            items.push_back(MenuItem(INK_APPLET_NEXT_TILE, MenuAction::NEXT_TILE, MenuPage::ROOT)); // Only if multiple applets shown
 
         items.push_back(MenuItem("Send", MenuPage::SEND));
-        items.push_back(MenuItem("Options", MenuPage::OPTIONS));
+        items.push_back(MenuItem(INK_APPLET_OPTIONS, MenuPage::OPTIONS));
         // items.push_back(MenuItem("Display Off", MenuPage::EXIT)); // TODO
         items.push_back(MenuItem("Save & Shut Down", MenuAction::SHUTDOWN));
-        items.push_back(MenuItem("Exit", MenuPage::EXIT));
+        items.push_back(MenuItem(INK_APPLET_EXIT, MenuPage::EXIT));
         break;
 
     case SEND:
@@ -321,7 +321,7 @@ void InkHUD::MenuApplet::showPage(MenuPage page)
         if (settings->userTiles.maxCount > 1)
             items.push_back(MenuItem("Layout", MenuAction::LAYOUT, MenuPage::OPTIONS));
         items.push_back(MenuItem("Rotate", MenuAction::ROTATE, MenuPage::OPTIONS));
-        items.push_back(MenuItem("Notifications", MenuAction::TOGGLE_NOTIFICATIONS, MenuPage::OPTIONS,
+        items.push_back(MenuItem(INK_APPLET_NOTIFICATIONS, MenuAction::TOGGLE_NOTIFICATIONS, MenuPage::OPTIONS,
                                  &settings->optionalFeatures.notifications));
         items.push_back(MenuItem("Battery Icon", MenuAction::TOGGLE_BATTERY_ICON, MenuPage::OPTIONS,
                                  &settings->optionalFeatures.batteryIcon));
@@ -331,17 +331,17 @@ void InkHUD::MenuApplet::showPage(MenuPage page)
 
         items.push_back(
             MenuItem("12-Hour Clock", MenuAction::TOGGLE_12H_CLOCK, MenuPage::OPTIONS, &config.display.use_12h_clock));
-        items.push_back(MenuItem("Exit", MenuPage::EXIT));
+        items.push_back(MenuItem(INK_APPLET_EXIT, MenuPage::EXIT));
         break;
 
     case APPLETS:
         populateAppletPage();
-        items.push_back(MenuItem("Exit", MenuPage::EXIT));
+        items.push_back(MenuItem(INK_APPLET_EXIT, MenuPage::EXIT));
         break;
 
     case AUTOSHOW:
         populateAutoshowPage();
-        items.push_back(MenuItem("Exit", MenuPage::EXIT));
+        items.push_back(MenuItem(INK_APPLET_EXIT, MenuPage::EXIT));
         break;
 
     case RECENTS:
@@ -543,7 +543,7 @@ void InkHUD::MenuApplet::populateRecentsPage()
     // Create an entry for each item in RECENTS_OPTIONS_MINUTES array
     // (Defined at top of this file)
     for (uint8_t i = 0; i < optionCount; i++) {
-        std::string label = to_string(RECENTS_OPTIONS_MINUTES[i]) + " mins";
+        std::string label = to_string(RECENTS_OPTIONS_MINUTES[i]) + " " + INK_APPLET_min;
         items.push_back(MenuItem(label.c_str(), MenuAction::SET_RECENTS, MenuPage::EXIT));
     }
 }
@@ -571,7 +571,7 @@ void InkHUD::MenuApplet::populateSendPage()
         items.push_back(MenuItem(itemText, MenuAction::STORE_CANNEDMESSAGE_SELECTION, MenuPage::CANNEDMESSAGE_RECIPIENT));
     }
 
-    items.push_back(MenuItem("Exit", MenuPage::EXIT));
+    items.push_back(MenuItem(INK_APPLET_EXIT, MenuPage::EXIT));
 }
 
 // Dynamically create MenuItem entries for possible canned message destinations
@@ -651,7 +651,7 @@ void InkHUD::MenuApplet::populateRecipientPage()
         }
     }
 
-    items.push_back(MenuItem("Exit", MenuPage::EXIT));
+    items.push_back(MenuItem(INK_APPLET_EXIT, MenuPage::EXIT));
 }
 
 // Renders the panel shown at the top of the root menu.

@@ -18,6 +18,7 @@
 #include "mesh/MeshTypes.h"
 
 #include "./AppletFont.h"
+#include "./AppletLocalization.h"
 #include "./Applets/System/Notification/Notification.h" // The notification object, not the applet
 #include "./InkHUD.h"
 #include "./Persistence.h"

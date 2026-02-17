@@ -15,6 +15,7 @@
 #include "graphics/niche/Drivers/EInk/EInk.h"
 
 #include "./AppletFont.h"
+#include "./AppletLocalization.h"
 
 #include <vector>
 
