@@ -11,7 +11,7 @@ def readProps(prefsLoc):
     config.read(prefsLoc)
     version = dict(config.items("VERSION"))
     verObj = dict(
-        short="{}.{}.{}".format(version["major"], version["minor"], version["build"]),
+        short="{}.{}.{}-{}".format(version["major"], version["minor"], version["build"], version["revision"]),
         long="unset",
         deb="unset",
     )
