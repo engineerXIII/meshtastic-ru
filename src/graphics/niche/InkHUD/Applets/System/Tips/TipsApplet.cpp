@@ -158,7 +158,11 @@ void InkHUD::TipsApplet::renderWelcome()
     setFont(fontMedium);
     std::string title;
     if (width() >= 200) // Future proofing: hide if *tiny* display
-        title = "meshtastic.org";
+    #ifdef INKHUD_RU
+    title = "Meshtastic RU";
+    #else 
+    title = "meshtastic.org";
+    #endif 
     uint16_t titleW = getTextWidth(title);
 
     // Center the block
